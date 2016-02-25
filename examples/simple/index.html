@@ -10,15 +10,20 @@
 var queue = new createjs.LoadQueue();
 queue.on("complete", handleComplete, this);
 queue.loadManifest([
-	{id: "image", src:"images.pack", type: 'binary'},
-	{id: "config", src:"images.json"},
+	{id: "image", src:"./test.pack", type: 'binary'},
+	{id: "config", src:"./test.json"},
 ]);
 function handleComplete() {
 	var unpacker = new Unpacker(queue.getResult('image'), queue.getResult('config'));
-	document.getElementById("i1").src = unpacker.getURI('forkit.gif');
-	document.getElementById("i2").src = unpacker.getURI('mario.jpg');
-	document.getElementById("i3").src = unpacker.getURI('Smile.png');
-	document.getElementById("container").style.backgroundImage = 'url(' + unpacker.getURI('packman_ghost.gif') + ')';
+	document.getElementById("i1").src = unpacker.getURI('18.webp');
+	document.getElementById("i2").src = unpacker.getURI('forkit.gif');
+	document.getElementById("i3").src = unpacker.getURI('mario.jpg');
+	document.getElementById("i4").src = unpacker.getURI('packman_ghost.gif');
+	document.getElementById("i5").src = unpacker.getURI('Smile.png');
+	window.objs = {
+		head: unpacker.getURI('head.obj'),
+		end: unpacker.getURI('end.obj')
+	}
 }
 </script>
 <style>
@@ -39,6 +44,8 @@ img
 		<img id="i1" />
 		<img id="i2" />
 		<img id="i3" />
+		<img id="i4" />
+		<img id="i5" />
 	</div>
 </body>
 </html>

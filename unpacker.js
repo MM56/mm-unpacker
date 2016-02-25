@@ -73,11 +73,6 @@
 			return ret;
 		}
 
-		function req() {
-			if(window.XMLHttpRequest) return new XMLHttpRequest();
-			if(window.ActiveXObject) return new ActiveXObject("MSXML2.XMLHTTP.3.0");
-		}
-
 		function Unpacker(pack, config) {
 			if(pack) {
 				this._init(pack, config);
@@ -86,9 +81,10 @@
 
 		Unpacker.prototype._init = function(pack, config) {
 			this.config = config;
+			this.pack = pack;
 			if(pack != null) {
 				if(hasBlob) {
-					this.blob = new Blob([pack]);
+					this.blob = new Blob([pack], { type: 'plain/text'});
 				} else {
 					this.ieBlob = GetIEByteArray_ByteStr(pack);
 				}
@@ -120,16 +116,28 @@
 				var b;
 				if(this.blob.slice) {
 					b = this.blob.slice(i, e, type);
+					if(type == "text/plain") {
+						return String.fromCharCode.apply(null, new Uint8Array(this.pack.slice(i, e)));
+					}
 					return URLProxy.createObjectURL(b);
 				} else if(this.blob.webkitSlice) {
 					b = this.blob.webkitSlice(i, e, type);
+					if(type == "text/plain") {
+						return String.fromCharCode.apply(null, new Uint8Array(this.pack.slice(i, e)));
+					}
 					return URLProxy.createObjectURL(b);
 				} else if(this.blob.mozSlice) {
 					b = this.blob.mozSlice(i, e, type);
+					if(type == "text/plain") {
+						return String.fromCharCode.apply(null, new Uint8Array(this.pack.slice(i, e)));
+					}
 					return URLProxy.createObjectURL(b);
 				}
 			} else {
 				if(isIE) {
+					if(type == "text/plain") {
+						return String.fromCharCode.apply(null, new Uint8Array(this.pack.slice(i, e)));
+					}
 					return 'data:' + type + ';base64,' + b64encodeString(this.ieBlob.substr(i, e - i));
 				}
 			}
