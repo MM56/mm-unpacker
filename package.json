@@ -2,7 +2,7 @@
   "name": "mm-unpacker",
   "version": "2.0.0",
   "description": "",
-  "main": "unpacker.js",
+  "main": "Unpacker.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
