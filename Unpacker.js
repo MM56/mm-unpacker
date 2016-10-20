@@ -93,7 +93,7 @@
 			var nbSteps = Math.ceil(data.byteLength / step);
 			var offset = 0;
 			for(var i = 0; i < nbSteps; i++) {
-				buffer += String.fromCharCode.apply(null, data.slice(offset, offset + step));
+				buffer += String.fromCharCode.apply(null, new Uint8Array(data.buffer.slice(offset, offset + step)));
 				offset += step;
 			}
 			return buffer;
