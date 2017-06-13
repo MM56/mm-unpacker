@@ -149,6 +149,8 @@
 				buffer += String.fromCharCode.apply(null, new Uint8Array(data.buffer.slice(offset, offset + step)));
 				offset += step;
 			}
+
+			buffer = decodeURIComponent(escape(buffer));
 			return buffer;
 		};
 		/**
